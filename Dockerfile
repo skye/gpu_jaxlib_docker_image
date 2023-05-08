@@ -29,7 +29,7 @@ RUN python3.10 -m pip install dist/*.whl
 RUN pip install -e .
 
 # install test and build deps --------------------------------------------------
-RUN "python3.10" -m pip install --U numpy=="1.21.6" scipy=="1.7.3" wheel pytest-xdist absl-py opt-einsum msgpack colorama portpicker matplotlib
+RUN "python3.10" -m pip install -U numpy=="1.21.6" scipy=="1.7.3" wheel pytest-xdist absl-py opt-einsum msgpack colorama portpicker matplotlib
 
 # install other useful stuff ---------------------------------------------------
-RUN "python3.10" -m pip install --upgrade ipython ipdb
+RUN "python3.10" -m pip install -U ipython ipdb
