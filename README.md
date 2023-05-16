@@ -8,7 +8,7 @@ I don't really know what I'm doing, especially when it comes to docker.
 ## Build image
 
 ```bash
-sudo docker build -t gpu_jaxlib
+sudo docker build -t gpu_jaxlib .
 ```
 
 Building GPU jaxlib takes a long time, so do this on a beefy machine (doesn't
@@ -22,23 +22,31 @@ sudo docker save -o <tar file> gpu_jaxlib:latest
 
 It needs lots of disk space (~25 GB).
 
+## One-time setup on GPU VM to run image
+
+These might need tweaking.
+
+```bash
+# from https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+      && curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+      && curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list | \
+            sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+            sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+
+sudo apt update
+sudo apt install nvidia-driver-530 -y
+sudo apt install nvidia-docker2 -y
+sudo apt install nvidia-container-toolkit-base -y
+sudo nvidia-ctk runtime configure
+sudo systemctl restart docker
+sudo reboot
+```
+
 ## Load image from tar file
 
 ```bash
 sudo docker load -i <tar file>
-```
-
-## One-time setup on GPU VM to run image
-
-I'm not sure how many of these are necessary.
-
-```bash
-sudo apt install nvidia-docker2
-sudo apt install nvidia-container-toolkit
-
-sudo nvidia-ctk runtime configure
-
-sudo systemctl restart docker
 ```
 
 ## Run image

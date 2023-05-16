@@ -32,4 +32,5 @@ RUN pip install -e .
 RUN "python3.10" -m pip install -U numpy=="1.21.6" scipy=="1.7.3" wheel pytest-xdist absl-py opt-einsum msgpack colorama portpicker matplotlib
 
 # install other useful stuff ---------------------------------------------------
-RUN "python3.10" -m pip install -U ipython ipdb
+RUN "python3.10" -m pip install -U ipython ipdb && sudo apt update && sudo apt install tmux -y
+RUN echo 'set -g history-limit 999999999' >> ~/.tmux.conf
