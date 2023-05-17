@@ -14,6 +14,16 @@ sudo docker build -t gpu_jaxlib .
 Building GPU jaxlib takes a long time, so do this on a beefy machine (doesn't
 have to have GPUs attached).
 
+## Copy jaxlib wheel out of image
+
+```bash
+image_name=gpu_jaxlib
+jaxlib_path=$(sudo docker run --rm $image_name find /root/jax/dist/ -mindepth 1)
+id=$(sudo docker create $image_name)
+sudo docker cp $id:$jaxlib_path .
+sudo docker rm -v $id
+```
+
 ## Save image to tar file
 
 ```bash
