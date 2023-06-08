@@ -8,7 +8,7 @@ I don't really know what I'm doing, especially when it comes to docker.
 ## Build image
 
 ```bash
-sudo docker build -t gpu_jaxlib .
+sudo docker build -t gpu_jaxlib cuda12 # or cuda11
 ```
 
 Building GPU jaxlib takes a long time, so do this on a beefy machine (doesn't
@@ -18,7 +18,7 @@ have to have GPUs attached).
 
 ```bash
 image_name=gpu_jaxlib
-jaxlib_path=$(sudo docker run --rm $image_name find /root/jax/dist/ -mindepth 1)
+jaxlib_path=$(sudo docker run --rm $image_name find /root/jax/dist/ -mindepth 1 | tail -n 1)
 id=$(sudo docker create $image_name)
 sudo docker cp $id:$jaxlib_path .
 sudo docker rm -v $id
