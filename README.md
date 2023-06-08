@@ -22,6 +22,7 @@ jaxlib_path=$(sudo docker run --rm $image_name find /root/jax/dist/ -mindepth 1 
 id=$(sudo docker create $image_name)
 sudo docker cp $id:$jaxlib_path .
 sudo docker rm -v $id
+ls `basename $jaxlib_path`
 ```
 
 ## Save image to tar file
