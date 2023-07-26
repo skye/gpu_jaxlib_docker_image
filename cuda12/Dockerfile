@@ -11,6 +11,8 @@ RUN git clone https://github.com/google/jax
 # build jaxlib from source
 RUN git clone https://github.com/openxla/xla
 WORKDIR jax
+
+RUN python3.9 -m pip install build
 RUN python3.10 build/build.py --enable_cuda --bazel_options=--override_repository=xla=$HOME/xla
 RUN python3.10 -m pip install dist/*.whl
 

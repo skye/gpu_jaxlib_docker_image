@@ -14,6 +14,7 @@ WORKDIR jax
 
 # RUN bazel build --verbose_failures=true --override_repository=xla=/root/xla --config=avx_posix --config=mkl_open_source_only --config=rbe_linux_cuda11.8_nvcc_py3.9 --config=tensorflow_testing_rbe_linux -- //build:build_wheel
 
+RUN python3.9 -m pip install build
 RUN python3.9 build/build.py --enable_cuda --bazel_options=--override_repository=xla=$HOME/xla
 RUN python3.9 -m pip install dist/*.whl
 
